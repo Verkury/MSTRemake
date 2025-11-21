@@ -2,14 +2,26 @@ package cryp
 
 import "fmt"
 
-var configDefault = make(map[string][]rune)
 var symbolsList string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя!% &*()+-="
 
 
 func MakeMap() map[string][]rune {
+	configDefault := make(map[string][]rune)
 	runes := []rune(symbolsList)
 	for n, v := range runes {
 		configDefault[decimalToBinary(n)] = []rune{v}
+	}
+	return configDefault
+}
+
+func MakeMapS(seed int) map[string][]rune {
+	configDefault := make(map[string][]rune)
+	shift := seed % 128
+	runes := []rune(symbolsList)
+
+	for n, v := range runes {
+		newPos := (n+ shift) % 128
+		configDefault[decimalToBinary(newPos)] = []rune{v}
 	}
 	return configDefault
 }
