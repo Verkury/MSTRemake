@@ -10,12 +10,19 @@ func main() {
 	mp1 := cryp.MakeMap()
 	message := "Hello, world!"
 	message1 := "Привет, мир!"
+	message2 := "Пример достаточно длинного текста для проверки большего количества символов на корректность 1234567890 !\"№;:??*(()_)"
 
-	fmt.Println(message, "->", cryp.Encrypt(mp, message), "->", cryp.Encrypt(mp, cryp.Encrypt(mp, message)))
-	fmt.Println(message1, "->", cryp.Encrypt(mp, message1), "->", cryp.Encrypt(mp, cryp.Encrypt(mp, message1)))
-	fmt.Println(message, "->", cryp.Encrypt(mp1, message), "->", cryp.Encrypt(mp1, cryp.Encrypt(mp1, message)))
-	fmt.Println(message1, "->", cryp.Encrypt(mp1, message1), "->", cryp.Encrypt(mp1, cryp.Encrypt(mp1, message1)))
-	fmt.Println("А теперь попытка расшифровать что-то с некоректным сидом")
-	fmt.Println(message, "->", cryp.Encrypt(mp, message), "->", cryp.Encrypt(mp, cryp.Encrypt(mp1, message)))
-	fmt.Println("Брух сиды можно стакать. Мощьность шифрования в абосолюте = 128^128")
+	NewMessage := cryp.Encrypt(mp, message)
+	NewMessage1 := cryp.Encrypt(mp, message1)
+	NewMessage2 := cryp.Encrypt(mp1, message)
+	NewMessage3 := cryp.Encrypt(mp1, message1)
+	NewMessage4 := cryp.Encrypt(mp, message2)
+	NewMessage5 := cryp.Encrypt(mp1, message2)
+
+	fmt.Println(message, "->", NewMessage, "->", cryp.Decrypt(mp, NewMessage))
+	fmt.Println(message1, "->", NewMessage1, "->", cryp.Decrypt(mp, NewMessage1))
+	fmt.Println(message, "->", NewMessage2, "->", cryp.Decrypt(mp1, NewMessage2))
+	fmt.Println(message1, "->", NewMessage3, "->", cryp.Decrypt(mp1, NewMessage3))
+	fmt.Println(message2, "->", NewMessage4, "->", cryp.Decrypt(mp, NewMessage4))
+	fmt.Println(message2, "->", NewMessage5, "->", cryp.Decrypt(mp1, NewMessage5))
 }
