@@ -1,29 +1,38 @@
 package cryp
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var symbolsList string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя!% &*()+-="
 
 
-func MakeMap() map[string][]rune {
-	configDefault := make(map[string][]rune)
+func MakeMap() (map[string] []rune, map[string]string) {
+	configDefaultIn := make(map[string][]rune)
+	configDefaultFrom := make(map[string]string)
 	runes := []rune(symbolsList)
+
 	for n, v := range runes {
-		configDefault[decimalToBinary(n)] = []rune{v}
+		binaryKey := decimalToBinary(n)
+		configDefaultIn[binaryKey] = []rune{v}
+		configDefaultFrom[string(v)] = binaryKey
 	}
-	return configDefault
+	return configDefaultIn, configDefaultFrom
 }
 
-func MakeMapS(seed int) map[string][]rune {
-	configDefault := make(map[string][]rune)
+func MakeMapS(seed int) (map[string][]rune, map[string]string) {
+	configDefaultIn := make(map[string][]rune)
+	configDefaultFrom := make(map[string]string)
 	shift := seed % 128
 	runes := []rune(symbolsList)
 
 	for n, v := range runes {
 		newPos := (n+ shift) % 128
-		configDefault[decimalToBinary(newPos)] = []rune{v}
+		binaryKey := decimalToBinary(newPos)
+		configDefaultIn[binaryKey] = []rune{v}
+		configDefaultFrom[string(v)] = binaryKey
 	}
-	return configDefault
+	return configDefaultIn, configDefaultFrom
 }
 
 func decimalToBinary(n int) string {
