@@ -30,7 +30,7 @@ func main() {
 	AMPMessage := cryp.AdvancedEncrypt(amp, message)
 	decMessage := cryp.AdvancedDecrypt(amp, AMPMessage)
 
-	fmt.Println("\n\nAdvanced level\n")
+	fmt.Print("\n\nAdvanced level\n\n")
 
 	fmt.Println(message, "->", AMPMessage, "->", decMessage)
 }
